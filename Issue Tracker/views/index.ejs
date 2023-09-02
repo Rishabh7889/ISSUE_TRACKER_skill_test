@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Issue Tracker</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Issue Tracker</h1>
+
+      <h2>Pending Issues</h2>
+      <ul>
+        <% issues.filter(issue => issue.status === 'Open').forEach((issue) => {
+        %>
+        <li>
+          <span class="status <%= issue.status.toLowerCase() %>"
+            ><%= issue.status %></span
+          >
+          <%= issue.title %> - <a href="/issues/<%= issue.id %>">Details</a>
+          <form
+            class="inline-form"
+            action="/issues/<%= issue.id %>/delete"
+            method="post"
+          >
+            <input type="submit" value="Delete" />
+          </form>
+        </li>
+        <% }); %>
+      </ul>
+
+      <h2>Completed Issues</h2>
+      <ul>
+        <% issues.filter(issue => issue.status === 'Closed').forEach((issue) =>
+        { %>
+        <li>
+          <span class="status <%= issue.status.toLowerCase() %>"
+            ><%= issue.status %></span
+          >
+          <%= issue.title %> - <a href="/issues/<%= issue.id %>">Details</a>
+          <form
+            class="inline-form"
+            action="/issues/<%= issue.id %>/delete"
+            method="post"
+          >
+            <input type="submit" value="Delete" />
+          </form>
+        </li>
+        <% }); %>
+      </ul>
+
+      <!-- Issue creation form -->
+      <div class="issue-form">
+        <h2>Create a New Issue</h2>
+        <form action="/issues" method="post">
+          <label for="title">Title</label>
+          <input type="text" id="title" name="title" required />
+
+          <label for="description">Description</label>
+          <textarea
+            id="description"
+            name="description"
+            rows="4"
+            required
+          ></textarea>
+
+          <input type="submit" value="Submit" />
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
